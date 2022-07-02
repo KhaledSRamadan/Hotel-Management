@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "montserrat";
+  background-image: linear-gradient(#22c6da, #0a6384);
+}
+.main {
+  height: 85.1vh;
+  padding-top: 75px;
+}
+.inner {
+  background: #08526d;
+  padding: 50px;
+  border-radius: 7px;
+  margin-top: 125px;
+  height: 50vh;
+  color: #22c6da;
+}
+.footer {
+  margin-top: 0 !important;
+}
+#profile-pic {
+  width: 150px;
+  border-radius: 50%;
+}
+.personal-info {
+  display: flex;
+  flex-direction: row;
+}
+.info-name {
+  margin-left: 15px;
+  flex: 3;
+}
+.image {
+  flex: 1;
+}
+.info-more {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.info-more p {
+  flex: 0 50%;
+  width: 100%;
+}
+
+.visa-info {
+  flex: 2;
+}
+.visa-btn {
+  background: #08526d;
+  width: 100px;
+  height: 45px;
+  border-radius: 7px;
+  color: #22c6da;
+  border: 2px solid #22c6da;
+}
+.visa-btn:focus {
+  outline: 0;
+}
+.visa-btn:hover {
+  background: #22c6da;
+  color: white;
+}
+.visa-info-toggle {
+  background: #0a6384;
+  border-radius: 7px;
+  margin-top: 5px;
+  max-height: 0px;
+  overflow: hidden;
+  -webkit-transition: max-height 0.75s;
+  -moz-transition: max-height 0.75s;
+  -ms-transition: max-height 0.75s;
+  -o-transition: max-height 0.75s;
+  transition: max-height 0.75s;
+}
+.visa-info-toggle p:first-child {
+  margin-top: 15px;
+}
+.visa-info-toggle p {
+  margin-left: 15px;
+}
+@media screen and (max-width: 768px) {
+  .personal-info {
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+  }
+
+  .info-name {
+    margin-left: 0;
+    text-align: left;
+  }
+  .inner {
+    margin-top: 25px;
+    min-height: 70vh;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .info-more {
+    flex-direction: column;
+  }
+}

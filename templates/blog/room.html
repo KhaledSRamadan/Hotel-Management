@@ -1,0 +1,196 @@
+{% load static from static %}
+{% csrf_token %}
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <title>Jewel Hotel</title>
+
+      <link href="{% static 'blog/style/fontawesome.min.css' %}" rel="stylesheet"> 
+      <!fontawesome.min.css>
+
+      <link href="{% static 'blog/style/brands.min.css' %}" rel="stylesheet">
+      <!brands.min.css>
+
+      <link href="{% static 'blog/style/solid.min.css' %}" rel="stylesheet">
+      <!solid.min.css>
+      
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="{% static 'blog/style/bootstrap.min.css' %}" >
+      <!bootstrap.min.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/jquery-ui.1-12-1.min.css' %}">
+      <!jquery-ui.1-12-1.min.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/header_footer.css' %}">
+      <!header_footer.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/room.css' %}" >
+      <!room.css>
+
+
+   </head>
+   <body>
+      <!--          start navbar -->
+     <nav class="navbar fixed-top navbar-expand-md navbar-dark">
+         <div class="container-fluid container-lg">
+            <a class="navbar-brand" href="#">Jewel Hotel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav">
+
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='/hotelhome' >Home</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href='/hotelhome' id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Branches
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for hotel in hotels %}
+                        <li><a class="dropdown-item" href='/branch/{{hotel.id}}'>{{hotel.Name}}</a></li>
+                        {% endfor %}
+                     </ul> 
+
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='../bookings'>bookings</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='../about/'>About Us</a>
+                  </li>
+                  {% if user.is_superuser %}
+                  <li class="nav-item">
+                     <a class="nav-link active" href='/admin/' aria-current="page">Admin</a>
+                  </li>
+                  {% endif %}
+               </ul>
+               <ul class="navbar-nav ms-auto">
+                  {% if user.is_authenticated %}
+                  <li class="nav-item ">
+                     <a class="nav-link" href="/profile"> Welcome, {{user.first_name}} {{user.last_name}}</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/logout">logout</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item ">
+                     <a class="nav-link" href='/login'>Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href='/signup'>join us</a>
+                  </li>
+                  {% endif %}
+               </ul>
+            </div>
+         </div>
+
+      </nav>
+
+      <!--          end navbar  -->
+
+      <!--       start room body -->
+
+      <div class="room_details">
+         <div class="container">
+            <h1 class="text-center">Room Detail</h1>
+            <div class="row">
+               <div class="col">
+                  
+                  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                     <ol class="carousel-indicators">
+                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+                     </ol>
+                     <div class="carousel-inner">
+                        <div class="carousel-item active">
+                           <img src="{{room.Room_Img.url}}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item active">
+                           <img src="{{room.Room_Img.url}}" class="d-block w-100" alt="...">
+                        </div>
+                     </div>
+                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                     </a>
+                     <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                     </a>
+                  </div>
+               </div>
+              
+
+               <div class="col">
+                  <p>Stunning Red Sea views, private balcony, 32-inch TV, work desk, mini bar, Take in breathtaking views of the River Nile from the private balcony of this comfy Deluxe room. This room features a king-sized bed, seating area, a work desk</p>
+                  <a class="btn btn-primary btn-sm" href="#">Check Rates</a>
+                  <h2>Room Highlights</h2>
+                  <ul>
+                     <li><i class="fas fa-bed fa-1x"></i>   {{room.room_type}} </li>
+                     <li><i class="fas fa-swimmer"></i>  {{room.view}}</li>
+                     <li><i class="fas fa-wifi"></i>   Free wifi</li>
+                      {% if room.breakfast %} <li><i class="fas fa-utensils"></i> Breakfast </li> {% endif %}
+                   <a class="btn btn-primary btn-sm" href='reserv/{{room.id}}'>Book Now</a>
+                  </ul>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+
+      <!--       end room body -->
+
+      <!--         start footer  -->
+      <div class="footer py-4 text-left">
+         <div class="foot-up">
+            <div class="container">
+               <div class="row">
+                  <div class="col">
+                     <h5>Home</h5>
+                     <ul class="list-unstyled">
+                        <li><a>search</a></li>
+                        <li><a>Help</a></li>
+                     </ul>
+                  </div>
+                  <div class="col">
+                     <div class="follow">
+                        <div class="row">
+                           <h6>follow us on</h6>
+                        </div>
+                        <div class="row">
+                           <ul class="list-unstyled d-flex justify-content-around">
+                              <li><a><i class="fab fa-facebook-f"></i></a></li>
+                              <li><a><i class="fab fa-telegram-plane"></i></a></li>
+                              <li><a><i class="fab fa-snapchat-ghost"></i></a></li>
+                              <li><a><i class="fab fa-twitter"></i></a></li>
+                              <li><a><i class="fab fa-whatsapp"></i></a></li>
+                              <li><a><i class="fab fa-youtube"></i></a></li>
+                              <li><a><i class="fab fa-google"></i></a></li>
+                           </ul>
+                        </div>
+                        <div>call us <span>+21314</span></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--         end footer  -->
+
+      <script src="{% static 'blog/script/jquery-3.5.1.min.js' %}"></script>
+      <script src="{% static 'blog/script/jquery-ui.1-12-1.min.js' %}"></script>
+      <script defer src="{% static 'blog/script/brands.min.js' %}"></script>
+      <script defer src="{% static 'blog/script/solid.min.js' %}"></script>
+      <script defer src="{% static 'blog/script/fontawesome.min.js' %}"></script>
+      <script src="{% static 'blog/script/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'blog/script/index.js' %}"></script>
+
+   </body>
+</html>

@@ -1,0 +1,193 @@
+{% csrf_token %}
+{% load static from static %}
+<!DOCTYPE html>
+<html>
+  <head>
+
+     <meta charset="utf-8">
+      <meta name=viewport content="width=device-width, initial-scale=1">
+      <title>Jewel Hotel</title>
+
+      <link href="{% static 'blog/style/fontawesome.min.css' %}" rel="stylesheet"> 
+      <!fontawesome.min.css>
+
+      <link href="{% static 'blog/style/brands.min.css' %}" rel="stylesheet">
+      <!brands.min.css>
+
+      <link href="{% static 'blog/style/solid.min.css' %}" rel="stylesheet">
+      <!solid.min.css>
+
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+
+      <link rel="stylesheet" href="{% static 'blog/style/bootstrap.min.css' %}" >
+      <!bootstrap.min.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/jquery-ui.1-12-1.min.css' %}">
+      <!jquery-ui.1-12-1.min.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/header_footer.css' %}">
+      <!header_footer.css>
+
+      <link rel="stylesheet" href="{% static 'blog/style/profile.css' %}" >
+      <!profile.css>
+  </head>
+  <body>
+    
+
+   <body>
+    <!--          start navbar -->
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark">
+         <div class="container-fluid container-lg">
+            <a class="navbar-brand" href="#">Jewel Hotel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul class="navbar-nav">
+
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='/hotelhome' >Home</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href='../#' id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Branches
+                     </a>
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for hotel in hotels %}
+                        <li><a class="dropdown-item" href='/branch/{{hotel.id}}'>{{hotel.Name}}</a></li>
+                        {% endfor %}
+                     </ul> 
+
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='../bookings'>bookings</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" aria-current="page" href='../about/'>About Us</a>
+                  </li>
+                  {% if user.is_superuser %}
+                  <li class="nav-item">
+                     <a class="nav-link active" href='/admin/' aria-current="page">Admin</a>
+                  </li>
+                  {% endif %}
+               </ul>
+               <ul class="navbar-nav ms-auto">
+                  {% if user.is_authenticated %}
+                  <li class="nav-item ">
+                     <a class="nav-link" href="/profile"> Welcome, {{user.first_name}} {{user.last_name}}</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/logout">logout</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item ">
+                     <a class="nav-link" href='/login'>Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href='/signup'>join us</a>
+                  </li>
+                  {% endif %}
+               </ul>
+            </div>
+         </div>
+
+      </nav>
+
+    <!--          end navbar  -->
+    <div class="main">
+      <div class="inner container">
+        <div class="personal-info">
+          <div class="image">
+            <img
+              id="profile-pic"
+              src="{{user.img.url}}"
+              alt="profile pic"
+            />
+          </div>
+          <div class="info-name">
+            <h2> {{user.first_name}} {{user.last_name}}</h2>
+            <div class="info-more">
+              <p><i class="fas fa-envelope"></i>{{user.email}}</p>
+              <p><i class="fa fa-child" aria-hidden="true"></i> {{user.userage}}</p>
+              <p><i class="fas fa-phone"></i> {{user.userphone}} </p>
+              <p><i class="fas fa-id-card"></i> {{user.usercreditcard}}</p>
+            </div>
+          </div>
+          <div class="visa-info">
+            <button class="visa-btn" onclick="toggleVisa()">Visa info</button>
+            <div class="visa-info-toggle" id="toggle-tab">
+              <p>Card number: {{user.usercreditcard}}</p>
+              <p>Holder: {{user.first_name}} {{user.last_name}}</p>
+              <p>expiry date: 12/03/2023</p>
+              <p>cvv: 123</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         start footer  -->
+    <div class="footer py-4 text-left">
+      <div class="foot-up">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-sm-3">
+              <h1>Jewel Hotel</h1>
+            </div>
+            <div class="col">
+              <h5>Home</h5>
+              <ul class="list-unstyled">
+                <li><a>search</a></li>
+                <li><a>Help</a></li>
+              </ul>
+            </div>
+            <div class="col">
+              <div class="follow">
+                <div class="row">
+                  <h6>follow us on</h6>
+                </div>
+                <div class="row">
+                  <ul class="list-unstyled d-flex justify-content-around">
+                    <li>
+                      <a><i class="fab fa-facebook-f"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-telegram-plane"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-snapchat-ghost"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-twitter"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-whatsapp"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-youtube"></i></a>
+                    </li>
+                    <li>
+                      <a><i class="fab fa-google"></i></a>
+                    </li>
+                  </ul>
+                </div>
+                <div>call us <span>+21314</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--         end footer  -->
+  
+
+    <script defer src="{% static 'blog/script/brands.min.js' %}"></script>
+    <script defer src="{% static 'blog/script/solid.min.js' %}"></script>
+    <script defer src="{% static 'blog/script/fontawesome.min.js' %}"></script>
+    <script src="{% static 'blog/script/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'blog/script/index.js' %}"></script>
+    <script src="{% static 'blog/script/profile.js' %}"></script>
+
+  </body>
+</html>

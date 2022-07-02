@@ -1,0 +1,46 @@
+* {
+   
+   font-family: 'montserrat', sans-serif;
+}
+.section-title { 
+   text-align: center;
+   font-family: 'montserrat', sans-serif;
+   color: #08526d;
+   font-weight: bold;
+   padding-bottom: 2rem;
+}
+
+
+
+
+.navbar{
+   background-color: #08526d;
+   font-family: 'montserrat', sans-serif;
+   font-size: 1rem;
+   min-height: 75px;
+}
+.navbar-brand {
+   font-weight: bold;
+}
+.navbar-toggler {
+   padding: .1rem 0.3rem;
+}
+.navbar-toggler:focus {
+   box-shadow: 0 0 0 .05rem;
+}
+
+/*     start footer     */
+.footer {
+   color: #fff;
+   margin-top: 6em;
+   background-color: #08526d;
+/*   background-image: url('../images/subtle_zebra_3d.png');*/
+   box-shadow: 0px 0px 7px rgb(144, 144, 144);
+}
+.footer span{
+   color: #cb4412;
+   font-weight: bold;
+}
+
+
+
